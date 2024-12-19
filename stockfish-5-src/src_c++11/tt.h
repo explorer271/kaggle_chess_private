@@ -78,7 +78,7 @@ public:
 
   const TTEntry* probe(const Key key) const;
   TTEntry* first_entry(const Key key) const;
-  void resize(uint64_t mbSize);
+  void resize(uint64_t mbSize = 1);
   void clear();
   void store(const Key key, Value v, Bound type, Depth d, Move m, Value statV);
 
