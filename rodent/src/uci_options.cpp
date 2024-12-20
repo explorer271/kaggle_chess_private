@@ -17,7 +17,6 @@ If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "rodent.h"
-#include "book.h"
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -187,15 +186,8 @@ void PrintUciOptions() {
     }
 	printfUciOut("option name Verbose type check default %s\n", Glob.isNoisy ? "true" : "false");
     printfUciOut("option name Ponder type check default %s\n", Par.use_ponder ? "true" : "false");
-    printfUciOut("option name UseBook type check default %s\n", Par.useBook ? "true" : "false");
-    printfUciOut("option name VerboseBook type check default %s\n", Par.verboseBook ? "true" : "false");
     printfUciOut("option name MobilityRebalancing type check default %s\n", Par.useMobilityRebalancing ? "true" : "false");
 
-    if (!Glob.useBooksFromPers || !Glob.usePersonalityFiles) {
-        printfUciOut("option name BookFilter type spin default %d min 0 max 100\n", Par.bookFilter);
-        printfUciOut("option name GuideBookFile type string default %s\n", GuideBook.bookName);
-        printfUciOut("option name MainBookFile type string default %s\n", MainBook.bookName);
-    }
 }
 
 static void valuebool(bool& param, char *val) {
@@ -415,13 +407,7 @@ void ParseSetoption(const char *ptr) {
             printf_debug("LogFile='%s'\n", WStr2Str(LogFileWStr).c_str());
             ReadPersonality("basic.ini"); // only for checking "CLEAR_LOG" - needed!
         }
-    } else if (strcmp(name, "bookfilter") == 0)                              {
-        Par.bookFilter = atoi(value);
-    } else if (strcmp(name, "guidebookfile") == 0)                           {
-        if (Glob.CanReadBook() ) GuideBook.SetBookName(value);
-    } else if (strcmp(name, "mainbookfile") == 0)                            {
-        if (Glob.CanReadBook() ) MainBook.SetBookName(value);
-    } else if (strcmp(name, "contempt") == 0)                                {
+    }  else if (strcmp(name, "contempt") == 0)                                {
         Par.drawScore = atoi(value);
         Glob.shouldClear = true;
     } else if (strcmp(name, "evalblur") == 0)                                {
@@ -456,10 +442,6 @@ void ParseSetoption(const char *ptr) {
             Glob.CastleNotation = KingMove;
     } else if (strcmp(name, "uci_chess960") == 0)                            {
         valuebool(Par.chess960, value);
-    } else if (strcmp(name, "usebook") == 0)                                 {
-        valuebool(Par.useBook, value);
-    } else if (strcmp(name, "verbosebook") == 0)                             {
-        valuebool(Par.verboseBook, value);
     } else if (strcmp(name, "mobilityrebalancing") == 0)                     {
     valuebool(Par.useMobilityRebalancing, value);
     } else if (strcmp(name, "searchskill") == 0)                             {
@@ -568,11 +550,6 @@ void ReadPersonality(const char *fileName) {
         while (*skipWS == ' ' || *skipWS == '\t')
             skipWS++;
 
-        // Do we pick opening book within a personality?
-
-        if (strstr(line, "PERSONALITY_BOOKS") == skipWS) Glob.useBooksFromPers = true; // DEFAULT
-        if (strstr(line, "GENERAL_BOOKS") == skipWS)     Glob.useBooksFromPers = false;
-
         // How we go about weakening the engine?
 
         if (strstr(line, "ELO_SLIDER") == skipWS) Glob.eloSlider = true; // DEFAULT
@@ -676,7 +653,6 @@ void ReadPersonality(const char *fileName) {
 
     if (cnt != 0) pers_aliases.count = cnt;
     fclose(personalityFile);
-    Par.SpeedToBookDepth(Par.npsLimit);
     Glob.isReadingPersonality = oldIsReadingPersonality;
 }
 
