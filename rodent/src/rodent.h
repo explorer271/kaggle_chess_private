@@ -301,27 +301,6 @@ constexpr U64 GetDoubleBPControl(const U64& b) { return (ShiftSE(b) & ShiftSW(b)
 
 constexpr bool MoreThanOne(const U64& b) { return b & (b - 1); }
 
-// taunt functions
-
-enum eTaunt{TAUNT_CAPTURE, 
-    TAUNT_CRUSHING, TAUNT_WINNING, TAUNT_ADVANTAGE, TAUNT_SMALL_PLUS, TAUNT_BALANCE, TAUNT_SMALL_MINUS,
-    TAUNT_GENERIC, TAUNT_DISADVANTAGE, TAUNT_LOSING};
-// TAUNT_INCHECK, TAUNT_CHECKMATE, TAUNT_BOOK
-
-void PrintTaunt(int eventType);
-void PrintGenericTaunt();
-void PrintCaptureTaunt();
-void PrintLosingTaunt();
-void PrintDisdvantageTaunt();
-void PrintBalanceTaunt();
-void PrintAdvantageTaunt();
-void PrintWinningTaunt();
-void PrintCrushingTaunt();
-void PrintUserBlunderTaunt();
-void PrintEngineBlunderTaunt();
-void PrintEngineEscapeTaunt();
-void PrintGainingTaunt();
-
 // bitboard functions
 
 int PopCnt(U64);
