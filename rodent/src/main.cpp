@@ -158,7 +158,6 @@ void cGlobals::Init() {
     isTesting = false;
     isBenching = false;
     isTuning = false;
-    useTaunting = false;
     printPv = true;
     isReadingPersonality = false;
     usePersonalityFiles = true;
