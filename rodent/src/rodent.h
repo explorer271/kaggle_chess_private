@@ -768,7 +768,6 @@ class cGlobals {
     bool eloSlider;
     bool isConsole;
     bool isTuning;
-    bool useTaunting;
     bool printPv;
     glob_bool pondering;
     glob_bool infinite;
@@ -789,10 +788,7 @@ class cGlobals {
     int timeBuffer;
     U64 game_key;         // random key initialized on ucinewgame to ensure non-repeating random eval modification for weak personalities
     int avoidMove[MAX_PV + 1]; // list of moves to avoid in multi-pv re-searches
-    int gameValue; // for more accurte taunts
-    int previousValue;
-    int previousTaunt;
-    int currentTaunt;
+    // int previousValue;
     eCastleNotation CastleNotation;
     eGUIs usedGUI;
 
