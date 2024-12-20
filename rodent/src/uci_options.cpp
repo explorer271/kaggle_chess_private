@@ -89,7 +89,6 @@ void PrintUciOptions() {
 
     if (Glob.eloSlider) {
         printfUciOut("option name PrintPv type check default %s\n", Glob.printPv ? "true" : "false");
-        printfUciOut("option name Taunting type check default %s\n", Glob.useTaunting ? "true" : "false");
         printfUciOut("option name UCI_LimitStrength type check default %s\n", Par.useWeakening ? "true" : "false");
         printfUciOut("option name UCI_Elo type spin default %d min 800 max 2800\n", Par.elo);
     }
@@ -441,8 +440,6 @@ void ParseSetoption(const char *ptr) {
         Par.SetSpeed(Par.elo);
     } else if (strcmp(name, "printpv") == 0)                                 {
         valuebool(Glob.printPv, value);
-    } else if (strcmp(name, "taunting") == 0)                                {
-        valuebool(Glob.useTaunting, value);
     } else if (strcmp(name, "verbose") == 0)                                 {
         valuebool(Glob.isNoisy, value);
     } else if (strcmp(name, "uci_limitstrength") == 0)                       {
