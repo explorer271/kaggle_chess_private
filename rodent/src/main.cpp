@@ -17,7 +17,6 @@ If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "rodent.h"
-#include "book.h"
 #include <cstdlib>
 #include <string>
 
@@ -33,8 +32,6 @@ cBitBoard BB;
 cParam Par;
 cMask Mask;
 cDistance Dist;
-sBook GuideBook;
-sBook MainBook;
 
 void PrintVersion() {
     std::string OutStr;
@@ -122,25 +119,18 @@ int main() {
     Dist.Init();
 
     Par.chess960 = false;
-	Par.useBook = true;
-	Par.verboseBook = false;
+	
 
     //PrintVersion();
 
 if (Glob.isNoisy) {
 #if defined(_WIN32) || defined(_WIN64)
-    printfUciOut("info string opening books path is '%ls' (%s)\n", _BOOKSPATH, ChDir(_BOOKSPATH) ? "exists" : "doesn't exist");
     printfUciOut("info string personalities path is '%ls' (%s)\n", _PERSONALITIESPATH, ChDir(_PERSONALITIESPATH) ? "exists" : "doesn't exist");
 #else
-    printfUciOut("info string opening books path is '%s' (%s)\n", _BOOKSPATH, ChDir(_BOOKSPATH) ? "exists" : "doesn't exist");
     printfUciOut("info string personalities path is '%s' (%s)\n", _PERSONALITIESPATH, ChDir(_PERSONALITIESPATH) ? "exists" : "doesn't exist");
 #endif
 }
 
-    PrintOverrides(); // print books and pers paths overrides (26/08/17: linux only)
-
-    GuideBook.SetBookName("guide.bin");
-    MainBook.SetBookName("rodent.bin");
     ReadPersonality("basic.ini");
 
     // To make also "setoption name Personality ..." useable in "default.txt"
@@ -161,7 +151,6 @@ void cGlobals::Init() {
     printPv = true;
     isReadingPersonality = false;
     usePersonalityFiles = true;
-    useBooksFromPers = true;
     showPersonalityFile = false;
     numberOfThreads = 1;
 	if (Glob.threadOverride)
@@ -189,8 +178,4 @@ void cGlobals::Init() {
     useUciPersonalitySet = false;
     personalityW = "";
     personalityB = "";
-}
-
-bool cGlobals::CanReadBook() {
-    return (useBooksFromPers == isReadingPersonality || !usePersonalityFiles);
 }
