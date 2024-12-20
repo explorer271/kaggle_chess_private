@@ -67,7 +67,6 @@ void cGlobals::ClearData() {
 #endif
     shouldClear = false;
     previousValue = 8888;
-    previousTaunt = TAUNT_GENERIC;
 }
 
 bool cGlobals::MoveToAvoid(int move) {
@@ -131,27 +130,7 @@ void cEngine::Think(POS *p) {
     AgeHist();
     Iterate(curr, mPvEng);
     mEngSide = p->mSide;
-
-    if (Glob.useTaunting) {
-        int tauntEvent = TAUNT_GENERIC;
-        int tsq = Tsq(mPvEng[0]);
-        if (SqBb(tsq) & p->Filled())
-            tauntEvent = TAUNT_CAPTURE;
-        else {
-            if (Glob.gameValue > -15 && Glob.gameValue < 15) tauntEvent = TAUNT_BALANCE;
-            else {
-                if (Glob.gameValue < 0) tauntEvent = TAUNT_SMALL_MINUS;
-                if (Glob.gameValue > 0) tauntEvent = TAUNT_SMALL_PLUS;
-                if (Glob.gameValue < -50) tauntEvent = TAUNT_DISADVANTAGE;
-                if (Glob.gameValue > 50) tauntEvent = TAUNT_ADVANTAGE;
-                if (Glob.gameValue > 100) tauntEvent = TAUNT_WINNING;
-                if (Glob.gameValue < -100) tauntEvent = TAUNT_LOSING;
-                if (Glob.gameValue > 300) tauntEvent = TAUNT_CRUSHING;
-            }
-        }
-
-        PrintTaunt(tauntEvent);
-    }
+	
 }
 
 void cEngine::ShowMultiPVInfo(POS * p, int curMove, int curDepth,
@@ -304,7 +283,6 @@ void cEngine::Iterate(POS *p, int *pv) {
     int cur_val = 0;
     int depthCounter = 0;
     Glob.previousValue = Glob.gameValue;
-    Glob.previousTaunt = Glob.currentTaunt;
 
     // Lazy SMP works best with some depth variance,
     // so every other thread will search to depth + 1
