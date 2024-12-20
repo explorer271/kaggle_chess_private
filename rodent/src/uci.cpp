@@ -17,7 +17,6 @@ If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "rodent.h"
-#include "book.h"
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -332,38 +331,6 @@ void ParseGo(POS *p, const char *ptr) {
         Glob.ClearData(); // options has been changed and old tt scores are no longer reliable
     Par.InitAsymmetric(p);
     Glob.finishedDepth = 0;
-
-    // get book move
-
-    if (Par.useBook) {
-
-        if (Glob.isNoisy)
-            printfUciOut("info string bd %d mfs %d\n", Par.bookDepth, Glob.moves_from_start);
-
-        int pvb = GuideBook.GetPolyglotMove(p, Par.verboseBook);
-
-        if (Par.bookDepth >= Glob.moves_from_start) {
-            if (!pvb) pvb = MainBook.GetPolyglotMove(p, Par.verboseBook);
-        }
-
-        if (pvb) {
-#ifndef USE_THREADS
-            EngineSingle.ReadyForBestmove();
-#else
-            Engines.front().ReadyForBestmove();
-#endif
-            if (MoveToStr(pvb).length()==3)
-                // Fix for Arena - not following standard and than have problem with
-                // stringlength of "O-O"
-                printfUciOut("bestmove %s \n", MoveToStr(pvb).c_str());
-            else
-                printfUciOut("bestmove %s\n", MoveToStr(pvb).c_str());
-
-            p->Unambiguous(pvb);
-
-            return;
-        }
-    }
 
     if (Glob.multiPv > 1) {
 
