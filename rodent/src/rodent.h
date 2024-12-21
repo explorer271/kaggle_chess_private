@@ -88,11 +88,6 @@ static constexpr int max_tt_size_mb = 1;
 #endif
 #define USE_FIRST_ONE_INTRINSICS
 
-// max size of an opening book to fully cache in memory (in MB)
-/*#ifndef NO_BOOK_IN_MEMORY
-    #define BOOK_IN_MEMORY_MB 16
-#endif*/
-
 //#define NO_THREADS
 
 #ifndef NO_THREADS
@@ -616,10 +611,6 @@ class cParam {
     bool tunable[N_OF_VAL];
     bool use_ponder; // this option does nothing
 	bool chess960;
-    bool useBook;
-    bool verboseBook;
-    int bookFilter;
-    int bookDepth;
     int elo;
     bool useMobilityRebalancing;
     bool useWeakening;
@@ -666,7 +657,6 @@ class cParam {
     void SetSpeed(int elo_in);
     int EloToSpeed(int elo_in);
     int EloToBlur(int elo_in);
-    int SpeedToBookDepth(int nps);
     void SetVal(int slot, int val, int min, int max, bool tune);
 };
 
@@ -772,7 +762,6 @@ class cGlobals {
     glob_bool pondering;
     glob_bool infinite;
     bool isReadingPersonality;
-    bool useBooksFromPers;
     bool shouldClear;
     bool goodbye;
     bool usePersonalityFiles;
@@ -782,7 +771,6 @@ class cGlobals {
     std::string personalityW;
     std::string personalityB;
     glob_int depthReached;
-    int moves_from_start; // to restrict book depth for weaker levels
     int numberOfThreads;
 	int multiPv;
     int timeBuffer;
@@ -795,7 +783,6 @@ class cGlobals {
 
     void ClearData();
     void Init();
-    bool CanReadBook();
 	bool MoveToAvoid(int move);
 	void ClearAvoidList();
 	void SetAvoidMove(int loc, int move);
@@ -1019,11 +1006,6 @@ extern const int ph_value[7];
 // macro PERSONALITIESPATH is where personalities and `basic.ini` live, default is relative "personalities/"
 
 #if defined(_WIN32) || defined(_WIN64)
-    #if defined(BOOKSPATH)
-        constexpr wchar_t _BOOKSPATH[] = MAKESTR(BOOKSPATH) L"";
-    #else
-        constexpr wchar_t _BOOKSPATH[] = L"books\\";
-    #endif
     #if defined(PERSONALITIESPATH)
         constexpr wchar_t _PERSONALITIESPATH[] = MAKESTR(PERSONALITIESPATH) L"";
     #else
@@ -1042,11 +1024,6 @@ extern const int ph_value[7];
     #endif
 
 #else
-    #if defined(BOOKSPATH)
-        constexpr char _BOOKSPATH[] = MAKESTR(BOOKSPATH) "";
-    #else
-        constexpr char _BOOKSPATH[] = "books/";
-    #endif
     #if defined(PERSONALITIESPATH)
         constexpr char _PERSONALITIESPATH[] = MAKESTR(PERSONALITIESPATH) "";
     #else
