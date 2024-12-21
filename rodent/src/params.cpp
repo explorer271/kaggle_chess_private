@@ -41,11 +41,6 @@ void cParam::DefaultWeights() {  // tuned automatically
     // evalBlur = 0; // became part of SetSpeed
     useMobilityRebalancing = false;
 
-    // Opening book
-
-    // bookDepth = 256; // became part of SetSpeed
-    bookFilter = 20;
-
     // Timing
 
     timePercentage = 100;
@@ -459,13 +454,11 @@ void cParam::InitKingAttackTable() {
 void cParam::SetSpeed(int elo_in) {
     npsLimit = 0;
     evalBlur = 0;
-    bookDepth = 256;
 
     if (useWeakening && elo_in<2800) {
         printf_debug("set ELO to %d\n", elo_in);
         npsLimit = EloToSpeed(elo_in);
         evalBlur = EloToBlur(elo_in);
-        bookDepth = SpeedToBookDepth(npsLimit);
     } else
         printf_debug("set ELO to maximum\n");
 }
@@ -492,13 +485,6 @@ int cParam::EloToBlur(int elo_in) {
 
     if (elo_in < 1500) return (1500 - elo_in) / 3;
     return 0;
-}
-
-int cParam::SpeedToBookDepth(int nps) {
-
-	if (nps == 0 || nps > 100000) return 256;
-
-	return (int) (nps * 256) / 100000;
 }
 
 void cDistance::Init() {
