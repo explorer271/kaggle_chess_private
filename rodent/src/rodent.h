@@ -75,9 +75,9 @@ using U64 = uint64_t;
 // max size of hashtable
 
 #ifdef _WIN64
-static constexpr int max_tt_size_mb = 1;
+static constexpr int max_tt_size_mb = 16384;
 #else
-static constexpr int max_tt_size_mb = 1;
+static constexpr int max_tt_size_mb = 4096;
 #endif
 
 // define how Rodent is to be compiled
