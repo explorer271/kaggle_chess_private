@@ -258,11 +258,6 @@ void CreateRodentHome(const char *RodentDir) {
 
     // All is fine, now
 
-#if defined(_WIN32) || defined(_WIN64)
-    DirNameStr = (std::string)RodentDir + WCStr2Str(_BOOKSPATH);
-#else
-    DirNameStr = (std::string)RodentDir + _BOOKSPATH;
-#endif
     if (!MkDir(DirNameStr.c_str()))
         return;
 
