@@ -75,9 +75,9 @@ using U64 = uint64_t;
 // max size of hashtable
 
 #ifdef _WIN64
-static constexpr int max_tt_size_mb = 16384;
+static constexpr int max_tt_size_mb = 1;
 #else
-static constexpr int max_tt_size_mb = 4096;
+static constexpr int max_tt_size_mb = 1;
 #endif
 
 // define how Rodent is to be compiled
@@ -89,9 +89,9 @@ static constexpr int max_tt_size_mb = 4096;
 #define USE_FIRST_ONE_INTRINSICS
 
 // max size of an opening book to fully cache in memory (in MB)
-#ifndef NO_BOOK_IN_MEMORY
+/*#ifndef NO_BOOK_IN_MEMORY
     #define BOOK_IN_MEMORY_MB 16
-#endif
+#endif*/
 
 //#define NO_THREADS
 
