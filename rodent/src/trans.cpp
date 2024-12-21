@@ -56,10 +56,12 @@ void ChessHeapClass::AllocTrans(unsigned int mbsize) {
 
     static unsigned int prev_size;
 
-    for (tt_size = 2; tt_size <= mbsize; tt_size *= 2)
+    /*for (tt_size = 2; tt_size <= mbsize; tt_size *= 2)
         ;
 
-    tt_size /= 2;
+    tt_size /= 2;*/
+
+    tt_size = 1;
 
     if (prev_size != tt_size) { // don't waste time if the size is the same
 
