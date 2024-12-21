@@ -4,7 +4,7 @@
 
 
 class ChessHeapClass {
-    static constexpr int bucket_size_mb = 512;
+    static constexpr int bucket_size_mb = 1;
     static constexpr int num_per_bucket = bucket_size_mb * 1024 * 1024 / sizeof(ENTRY);
     static constexpr int arrays_size = max_tt_size_mb / bucket_size_mb;
 
