@@ -325,8 +325,6 @@ bool ChDir(const wchar_t *new_path) {
 #else
 void PrintOverrides() {
 
-    if (char *ptr = getenv("RODENT4BOOKS"))
-        printfUciOut("info string override for books path: '%s'\n", ptr);
     if (char *ptr = getenv("RODENT4PERSONALITIES"))
         printfUciOut("info string override for personalities path: '%s'\n", ptr);
 }
