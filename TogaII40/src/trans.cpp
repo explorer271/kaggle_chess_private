@@ -135,19 +135,10 @@ void trans_alloc(trans_t * trans) {
 
    uint64 size, target;
 
-   // calculate size
+   ASSERT(trans!=NULL);
 
-   target = option_get_int("Hash");
-
-   if (target < 4) target = 16; // option.cpp
-
-#ifdef IS_64
-   if (target > 16384) target = 16384; // option.cpp
-#else
-   if (target > 1024) target = 1024; // option.cpp
-#endif
-
-   target *= 1024 * 1024;
+   // Set a smaller hash size (e.g., 1 MB)
+   target = 1 * 1024 * 1024; // 1 MB
 
    for (size = 1; size != 0 && size <= target; size *= 2)
       ;
