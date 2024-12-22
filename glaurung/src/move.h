@@ -26,7 +26,6 @@
 
 #include <iostream>
 
-#include "misc.h"
 #include "piece.h"
 #include "square.h"
 
