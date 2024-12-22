@@ -43,6 +43,37 @@
 //// Local definitions
 ////
 
+#define Min(x, y) (((x) < (y))? (x) : (y))
+
+/// get_system_time() returns the current system time, measured in
+/// milliseconds.
+
+int get_system_time() {
+  struct timeval t;
+  gettimeofday(&t, NULL);
+  return t.tv_sec*1000 + t.tv_usec/1000; 
+}
+
+/*
+  From Beowulf, from Olithink
+*/
+#ifndef _WIN32
+/* Non-windows version */
+int Bioskey()
+{
+  fd_set          readfds;
+  struct timeval  timeout;
+  
+  FD_ZERO(&readfds);
+  FD_SET(fileno(stdin), &readfds);
+  /* Set to timeout immediately */
+  timeout.tv_sec = 0;
+  timeout.tv_usec = 0;
+  select(16, &readfds, 0, 0, &timeout);
+  
+  return (FD_ISSET(fileno(stdin), &readfds));
+}
+
 namespace {
 
   /// Types
