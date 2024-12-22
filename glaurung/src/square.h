@@ -28,8 +28,7 @@
 #include <string>
 
 #include "color.h"
-#include "misc.h"
-
+#define Max(x, y) (((x) < (y))? (y) : (x))
 
 ////
 //// Types
