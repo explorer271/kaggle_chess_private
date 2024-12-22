@@ -290,7 +290,7 @@ namespace {
 /// values, an endgame score and a middle game score, and interpolates
 /// between them based on the remaining material.
 
-Value evaluate(const Position &pos, EvalInfo &ei, int threadID) {
+Value evaluate(const Position &pos, EvalInfo &ei) {
   Color stm;
   ScaleFactor factor[2] = {SCALE_FACTOR_NORMAL, SCALE_FACTOR_NORMAL};
   Phase phase;
@@ -298,7 +298,6 @@ Value evaluate(const Position &pos, EvalInfo &ei, int threadID) {
   memset(&ei, 0, sizeof(EvalInfo));
 
   assert(pos.is_ok());
-  assert(threadID >= 0 && threadID < THREAD_MAX);
 
   stm = pos.side_to_move();
 
@@ -308,7 +307,7 @@ Value evaluate(const Position &pos, EvalInfo &ei, int threadID) {
   ei.egValue = pos.eg_value();
 
   // Probe the material hash table:
-  ei.mi = MaterialTable[threadID]->get_material_info(pos);
+  ei.mi = MaterialTable[0]->get_material_info(pos);
   ei.mgValue += ei.mi->mg_value();
   ei.egValue += ei.mi->eg_value();
 
@@ -323,7 +322,7 @@ Value evaluate(const Position &pos, EvalInfo &ei, int threadID) {
   phase = pos.game_phase();
 
   // Probe the pawn hash table:
-  ei.pi = PawnTable[threadID]->get_pawn_info(pos);
+  ei.pi = PawnTable[0]->get_pawn_info(pos);
   ei.mgValue += apply_weight(ei.pi->mg_value(), WeightPawnStructureMidgame);
   ei.egValue += apply_weight(ei.pi->eg_value(), WeightPawnStructureEndgame);
 
@@ -494,16 +493,14 @@ Value quick_evaluate(const Position &pos) {
 
 /// init_eval() initializes various tables used by the evaluation function.
 
-void init_eval(int threads) {
-  assert(threads <= THREAD_MAX);
+void init_eval() {
   
-  for(int i = 0; i < threads; i++) {
-    if(PawnTable[i] == NULL)
-      PawnTable[i] = new PawnInfoTable(PawnTableSize);
-    if(MaterialTable[i] == NULL)
-      MaterialTable[i] = new MaterialInfoTable(MaterialTableSize);
-  }
-  for(int i = threads; i < THREAD_MAX; i++) {
+    if(PawnTable[0] == NULL)
+      PawnTable[0] = new PawnInfoTable(PawnTableSize);
+    if(MaterialTable[0] == NULL)
+      MaterialTable[0] = new MaterialInfoTable(MaterialTableSize);
+  
+  for(int i = 1; i < 8; i++) {
     if(PawnTable[i] != NULL) {
       delete PawnTable[i];
       PawnTable[i] = NULL;
@@ -522,10 +519,8 @@ void init_eval(int threads) {
 /// quit_eval() releases heap-allocated memory at program termination.
 
 void quit_eval() {
-  for(int i = 0; i < THREAD_MAX; i++) {
-    delete PawnTable[i];
-    delete MaterialTable[i];
-  }
+    delete PawnTable[0];
+    delete MaterialTable[0];
 }
 
 
