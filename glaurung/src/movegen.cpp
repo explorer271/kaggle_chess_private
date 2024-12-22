@@ -24,7 +24,7 @@
 #include <cassert>
 
 #include "movegen.h"
-
+#define Min(x, y) (((x) < (y))? (x) : (y))
 
 ////
 //// Local definitions
