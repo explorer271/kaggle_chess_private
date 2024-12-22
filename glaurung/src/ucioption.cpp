@@ -21,6 +21,7 @@
 //// Includes
 ////
 
+#include <iostream>
 #include <cassert>
 #include <cstdarg>
 #include <cstdio>
