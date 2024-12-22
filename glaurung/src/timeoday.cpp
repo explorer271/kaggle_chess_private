@@ -4,7 +4,7 @@
    This software may be used freely so long as this copyright notice is
    left intact.  There is no warrantee on this software.
  */
-#include <windows.h>
+// #include <windows.h>
 #include <time.h>
 #include "dos.h"
 
