@@ -6,7 +6,7 @@
  */
 // #include <windows.h>
 #include <time.h>
-#include "dos.h"
+// #include "dos.h"
 
 
 int             gettimeofday(struct timeval * tp, struct timezone * tzp)
