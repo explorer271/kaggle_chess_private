@@ -24,7 +24,6 @@
 #include <iostream>
 #include <string>
 
-#include "book.h"
 #include "evaluate.h"
 #include "misc.h"
 #include "move.h"
@@ -190,7 +189,6 @@ namespace {
     std::string s = uip.get_next_token();
 
     if(s == "quit") {
-      OpeningBook.close();
       stop_threads();
       quit_eval();
       exit(0);
