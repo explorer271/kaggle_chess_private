@@ -30,7 +30,6 @@
 #include "evaluate.h"
 #include "material.h"
 #include "mersenne.h"
-#include "misc.h"
 #include "movepick.h"
 #include "position.h"
 #include "search.h"
