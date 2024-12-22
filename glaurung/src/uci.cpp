@@ -25,7 +25,6 @@
 #include <string>
 
 #include "evaluate.h"
-#include "misc.h"
 #include "move.h"
 #include "movegen.h"
 #include "position.h"
