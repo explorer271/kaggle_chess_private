@@ -193,8 +193,6 @@ namespace {
       exit(0);
     }
     else if(s == "uci") {
-      std::cout << "id name " << engine_name() << std::endl;
-      std::cout << "id author Tord Romstad" << std::endl;
       print_uci_options();
       std::cout << "uciok" << std::endl;
     }
