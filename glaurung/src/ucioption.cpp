@@ -26,7 +26,6 @@
 #include <cstdio>
 #include <cstring>
 
-#include "misc.h"
 #include "thread.h"
 #include "ucioption.h"
 
