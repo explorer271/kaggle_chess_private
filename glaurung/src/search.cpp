@@ -28,7 +28,6 @@
 #include <iostream>
 #include <sstream>
 
-#include "book.h"
 #include "evaluate.h"
 #include "history.h"
 #include "mersenne.h"
@@ -300,19 +299,6 @@ void think(const Position &pos, bool infinite, bool ponder, int time,
            int increment, int movesToGo, int maxDepth, int maxNodes,
            int maxTime, Move searchMoves[]) {
 
-  // Look for a book move:
-  if(!infinite && !ponder && get_option_value_bool("OwnBook")) {
-    Move bookMove;
-    if(get_option_value_string("Book File") != OpeningBook.file_name()) {
-      OpeningBook.close();
-      OpeningBook.open("book.bin");
-    }
-    bookMove = OpeningBook.get_move(pos);
-    if(bookMove != MOVE_NONE) {
-      std::cout << "bestmove " << bookMove << std::endl;
-      return;
-    }
-  }
 
   // Initialize global search variables:
   Idle = false;
@@ -465,7 +451,6 @@ void think(const Position &pos, bool infinite, bool ponder, int time,
     LogFile.close();
   
   if(Quit) {
-    OpeningBook.close();
     stop_threads();
     quit_eval();
     exit(0);
@@ -2135,7 +2120,6 @@ namespace {
         command = "quit";
       
       if(command == "quit") {
-        OpeningBook.close();
         stop_threads();
         quit_eval();
         exit(0);
