@@ -31,7 +31,6 @@
 #include "evaluate.h"
 #include "history.h"
 #include "mersenne.h"
-#include "misc.h"
 #include "movepick.h"
 #include "san.h"
 #include "search.h"
