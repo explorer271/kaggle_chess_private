@@ -28,7 +28,6 @@
 #include "material.h"
 #include "pawns.h"
 #include "scale.h"
-#include "thread.h"
 #include "ucioption.h"
 
 #define Min(x, y) (((x) < (y))? (x) : (y))
