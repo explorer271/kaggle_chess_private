@@ -25,7 +25,6 @@
 ////
 
 #include "color.h"
-#include "misc.h"
 #include "square.h"
 
 
