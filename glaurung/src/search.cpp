@@ -38,7 +38,9 @@
 #include "tt.h"
 #include "ucioption.h"
 
-
+#  include <sys/time.h>
+#  include <sys/types.h>
+#  include <unistd.h>
 ////
 //// Local definitions
 ////
@@ -57,8 +59,7 @@ int get_system_time() {
 /*
   From Beowulf, from Olithink
 */
-#ifndef _WIN32
-/* Non-windows version */
+
 int Bioskey()
 {
   fd_set          readfds;
