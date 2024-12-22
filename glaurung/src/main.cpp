@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 
 
   // Print copyright notice
-  std::cout << engine_name() << ".  "
+  std::cout << "Glaurung " << ".  "
             << "Copyright (C) 2004-2008 Tord Romstad."
             << std::endl;
 
