@@ -24,7 +24,6 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "benchmark.h"
 #include "bitboard.h"
 #include "direction.h"
 #include "endgame.h"
@@ -66,22 +65,6 @@ int main(int argc, char *argv[]) {
   init_bitbases();
   init_threads();
 
-  // Make random number generation less deterministic, for book moves
-  int i = abs(get_system_time() % 10000);
-  for(int j = 0; j < i; j++)
-    genrand_int32();
-
-  // Process command line arguments
-  if(argc >= 2) {
-    if(std::string(argv[1]) == "bench") {
-      if(argc != 4) {
-        std::cout << "Usage: glaurung bench <hash> <threads>" << std::endl;
-        exit(0);
-      }
-      benchmark(std::string(argv[2]), std::string(argv[3]));
-      return 0;
-    }
-  }
 
   // Print copyright notice
   std::cout << engine_name() << ".  "
