@@ -34,7 +34,6 @@
 #include "movepick.h"
 #include "san.h"
 #include "search.h"
-#include "thread.h"
 #include "tt.h"
 #include "ucioption.h"
 
