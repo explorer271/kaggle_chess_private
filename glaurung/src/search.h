@@ -26,7 +26,6 @@
 
 #include "depth.h"
 #include "history.h"
-#include "lock.h"
 #include "movegen.h"
 #include "position.h"
 #include "tt.h"
