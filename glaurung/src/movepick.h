@@ -46,7 +46,6 @@ public:
   MovePicker(Position &p, bool pvnode, Move ttm, Move mk, Move k1, Move k2,
              Depth dpth);
   Move get_next_move();
-  Move get_next_move(Lock &lock);
   int number_of_moves() const;
   int current_move_score() const;
   Bitboard discovered_check_candidates();
