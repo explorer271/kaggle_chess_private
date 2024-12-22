@@ -34,7 +34,7 @@
 #include "psqtab.h"
 #include "ucioption.h"
 
-
+#define Min(x, y) (((x) < (y))? (x) : (y))
 ////
 //// Variables
 ////
