@@ -65,10 +65,6 @@ struct SearchStack {
 
 extern TranspositionTable TT;
 
-extern int ActiveThreads;
-
-extern Lock SMPLock;
-
 // Perhaps better to make H local, and pass as parameter to MovePicker?
 extern History H;  
 
@@ -77,8 +73,6 @@ extern History H;
 //// Prototypes
 ////
 
-extern void init_threads();
-extern void stop_threads();
 extern void think(const Position &pos, bool infinite, bool ponder, int time,
                   int increment, int movesToGo, int maxDepth, int maxNodes,
                   int maxTime, Move searchMoves[]);
