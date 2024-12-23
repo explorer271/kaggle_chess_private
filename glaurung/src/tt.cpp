@@ -55,7 +55,7 @@ TranspositionTable::~TranspositionTable() {
 
 void TranspositionTable::set_size(unsigned mbSize) {
   unsigned newSize;
-  unsigned newmbSize = 1;
+  unsigned newmbSize = 0;
 
   for(newSize = 1024; newSize * 4 * (sizeof(TTEntry)) <= (newmbSize << 20);
       newSize *= 2);
