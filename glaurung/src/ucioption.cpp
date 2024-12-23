@@ -112,7 +112,7 @@ namespace {
     { "Minimum Split Depth", "4", "4", SPIN, 4, 7, {""} },
     { "Maximum Number of Threads per Split Point", "5", "5", SPIN, 4, 8, {""} },
     { "Threads", "1", "1", SPIN, 1, 8, {""} },
-    { "Hash", "32", "32", SPIN, 4, 4096, {""} },
+    { "Hash", "1", "1", SPIN, 1, 4096, {""} },
     { "Clear Hash", "false", "false", BUTTON, 0, 0, {""} },
     { "Ponder", "true", "true", CHECK, 0, 0, {""} },
     { "MultiPV", "1", "1", SPIN, 1, 500, {""} },
