@@ -86,7 +86,7 @@ private:
 ////
 
 // Default transposition table size, in megabytes:
-const int TTDefaultSize = 32;
+const int TTDefaultSize = 1;
 
 
 #endif // !defined(TT_H_INCLUDED)
