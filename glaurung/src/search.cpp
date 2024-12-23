@@ -28,7 +28,6 @@
 #include <iostream>
 #include <sstream>
 
-#include "book.h"
 #include "evaluate.h"
 #include "history.h"
 #include "mersenne.h"
@@ -197,9 +196,6 @@ namespace {
   // Show current line?
   bool ShowCurrentLine = false;
 
-  // Log file
-  bool UseLogFile = false;
-  std::ofstream LogFile;
 
   // MP related variables
   Depth MinimumSplitDepth = 4*OnePly;
@@ -300,19 +296,6 @@ void think(const Position &pos, bool infinite, bool ponder, int time,
            int increment, int movesToGo, int maxDepth, int maxNodes,
            int maxTime, Move searchMoves[]) {
 
-  // Look for a book move:
-  if(!infinite && !ponder && get_option_value_bool("OwnBook")) {
-    Move bookMove;
-    if(get_option_value_string("Book File") != OpeningBook.file_name()) {
-      OpeningBook.close();
-      OpeningBook.open("book.bin");
-    }
-    bookMove = OpeningBook.get_move(pos);
-    if(bookMove != MOVE_NONE) {
-      std::cout << "bestmove " << bookMove << std::endl;
-      return;
-    }
-  }
 
   // Initialize global search variables:
   Idle = false;
@@ -371,10 +354,6 @@ void think(const Position &pos, bool infinite, bool ponder, int time,
 
   Chess960 = get_option_value_bool("UCI_Chess960");
   ShowCurrentLine = get_option_value_bool("UCI_ShowCurrLine");
-  UseLogFile = get_option_value_bool("Use Search Log");
-  if(UseLogFile)
-    LogFile.open(get_option_value_string("Search Log Filename").c_str(),
-                 std::ios::out | std::ios::app);
 
   UseQSearchFutilityPruning =
     get_option_value_bool("Futility Pruning (Quiescence Search)");
@@ -404,13 +383,6 @@ void think(const Position &pos, bool infinite, bool ponder, int time,
     init_eval(ActiveThreads);
   }
 
-  // Write information to search log file:
-  if(UseLogFile) {
-    LogFile << "Searching: " << pos.to_fen() << '\n';
-    LogFile << "infinite: " << infinite << " ponder: " << ponder
-            << " time: " << time << " increment: " << increment
-            << " moves to go: " << movesToGo << '\n';
-  }
 
   // Wake up sleeping threads:
   wake_sleeping_threads();
@@ -461,11 +433,8 @@ void think(const Position &pos, bool infinite, bool ponder, int time,
   // function:
   id_loop(pos, searchMoves);
 
-  if(UseLogFile)
-    LogFile.close();
   
   if(Quit) {
-    OpeningBook.close();
     stop_threads();
     quit_eval();
     exit(0);
@@ -670,15 +639,6 @@ namespace {
       std::cout << " ponder " << ss[0].pv[1];
     std::cout << std::endl;
 
-    if(UseLogFile) {
-      UndoInfo u;
-      LogFile << "Nodes: " << nodes_searched() << '\n';
-      LogFile << "Nodes/second: " << nps() << '\n';
-      LogFile << "Best move: " << move_to_san(p, ss[0].pv[0]) << '\n';
-      p.do_move(ss[0].pv[0], u);
-      LogFile << "Ponder move: " << move_to_san(p, ss[0].pv[1]) << '\n';
-      LogFile << std::endl;
-    }
   }
 
 
@@ -786,10 +746,6 @@ namespace {
             std::cout << ss[0].pv[j] << " ";
           std::cout << std::endl;
 
-          if(UseLogFile)
-            LogFile << pretty_pv(pos, current_search_time(), Iteration,
-                                 nodes_searched(), value, ss[0].pv)
-                    << std::endl;
 
           alpha = value;
 
@@ -2135,7 +2091,6 @@ namespace {
         command = "quit";
       
       if(command == "quit") {
-        OpeningBook.close();
         stop_threads();
         quit_eval();
         exit(0);
