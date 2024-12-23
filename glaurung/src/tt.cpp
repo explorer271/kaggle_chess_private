@@ -55,10 +55,9 @@ TranspositionTable::~TranspositionTable() {
 
 void TranspositionTable::set_size(unsigned mbSize) {
   unsigned newSize;
+  unsigned newmbSize = 1;
 
-  assert(mbSize >= 4 && mbSize <= 1024);
-
-  for(newSize = 1024; newSize * 4 * (sizeof(TTEntry)) <= (mbSize << 20);
+  for(newSize = 1024; newSize * 4 * (sizeof(TTEntry)) <= (newmbSize << 20);
       newSize *= 2);
   newSize /= 2;
 
@@ -67,7 +66,7 @@ void TranspositionTable::set_size(unsigned mbSize) {
     delete [] entries;
     entries = new TTEntry[size * 4];
     if(entries == NULL) {
-      std::cerr << "Failed to allocate " << mbSize
+      std::cerr << "Failed to allocate " << newmbSize
                 << " MB for transposition table."
                 << std::endl;
       exit(EXIT_FAILURE);
