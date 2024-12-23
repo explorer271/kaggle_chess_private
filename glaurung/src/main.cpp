@@ -65,10 +65,6 @@ int main(int argc, char *argv[]) {
   init_bitbases();
   init_threads();
 
-  // Make random number generation less deterministic, for book moves
-  int i = abs(get_system_time() % 10000);
-  for(int j = 0; j < i; j++)
-    genrand_int32();
 
 
   // Print copyright notice
