@@ -90,27 +90,9 @@ int get_system_time() {
 
 /// cpu_count() tries to detect the number of CPU cores.
 
-#if !defined(_MSC_VER)
-
-#  if defined(_SC_NPROCESSORS_ONLN)
-int cpu_count() {
-  return Min(sysconf(_SC_NPROCESSORS_ONLN), 8);
-}
-#  else
 int cpu_count() {
   return 1;
 }
-#  endif
-
-#else
-
-int cpu_count() {
-  SYSTEM_INFO s;
-  GetSystemInfo(&s);
-  return Min(s.dwNumberOfProcessors, 8);
-}
-
-#endif
 
 
 /*
