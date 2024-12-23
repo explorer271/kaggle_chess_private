@@ -63,9 +63,6 @@ namespace {
   ///
 
   Option Options[] = {
-    { "Use Search Log", "false", "false", CHECK, 0, 0, {""} },
-    { "Search Log Filename", "SearchLog.txt", "SearchLog.txt", STRING, 0, 0, {""} },
-    { "Book File", "book.bin", "book.bin", STRING, 0, 0, {""} },
     { "Mobility (Middle Game)", "100", "100", SPIN, 0, 200, {""} },
     { "Mobility (Endgame)", "100", "100", SPIN, 0, 200, {""} },
     { "Pawn Structure (Middle Game)", "100", "100", SPIN, 0, 200, {""} },
@@ -118,7 +115,6 @@ namespace {
     { "Hash", "32", "32", SPIN, 4, 4096, {""} },
     { "Clear Hash", "false", "false", BUTTON, 0, 0, {""} },
     { "Ponder", "true", "true", CHECK, 0, 0, {""} },
-    { "OwnBook", "true", "true", CHECK, 0, 0, {""} },
     { "MultiPV", "1", "1", SPIN, 1, 500, {""} },
     { "UCI_ShowCurrLine", "false", "false", CHECK, 0, 0, {""} },
     { "UCI_Chess960", "false", "false", CHECK, 0, 0, {""} },
