@@ -251,8 +251,8 @@ namespace {
   MaterialInfoTable *MaterialTable[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
   // Sizes of pawn and material hash tables:
-  const int PawnTableSize = 16384;
-  const int MaterialTableSize = 1024;
+  const int PawnTableSize = 0;
+  const int MaterialTableSize = 0;
 
   // Array which gives the number of nonzero bits in an 8-bit integer:
   uint8_t BitCount8Bit[256];
