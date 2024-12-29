@@ -47,7 +47,7 @@ void uci_loop(bool bench) {
         search_cleanUp();
         bb_cleanUp();
     } else {
-        std::cout << "Koivisto 64 " << MAJOR_VERSION << "." << MINOR_VERSION << " by K. Kahre, F. Eggers, E. Bruno"
+        std::cout << "Koivisto 64 " << " by K. Kahre, F. Eggers, E. Bruno"
                   << std::endl;
 
         board = new Board();
@@ -73,7 +73,7 @@ void uci_loop(bool bench) {
  * Also displays a list of all uci options which can be set. Finally, 'uciok' is sent back to receive further commands.
  */
 void uci_uci() {
-    std::cout << "id name Koivisto 64 " << MAJOR_VERSION << "." << MINOR_VERSION << std::endl;
+    std::cout << "id name Koivisto 64 " << std::endl;
     std::cout << "id author K. Kahre, F. Eggers, E. Bruno" << std::endl;
     std::cout << "option name Hash type spin default 16 min 1 max " << maxTTSize() << std::endl;
     std::cout << "option name Threads type spin default 1 min 1 max " << MAX_THREADS << std::endl;
