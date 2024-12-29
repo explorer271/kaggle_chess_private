@@ -38,7 +38,7 @@ std::thread* searchThread = nullptr;
 void uci_loop(bool bench) {
 
     bb_init();
-    search_init(16);
+    search_init(1);
     eval_init();
 
     if (bench) {
@@ -75,7 +75,7 @@ void uci_loop(bool bench) {
 void uci_uci() {
     std::cout << "id name Koivisto 64 " << std::endl;
     std::cout << "id author K. Kahre, F. Eggers, E. Bruno" << std::endl;
-    std::cout << "option name Hash type spin default 16 min 1 max " << maxTTSize() << std::endl;
+    std::cout << "option name Hash type spin default 1 min 1 max " << maxTTSize() << std::endl;
     std::cout << "option name Threads type spin default 1 min 1 max " << MAX_THREADS << std::endl;
     std::cout << "option name SyzygyPath type string default" << std::endl;
 
