@@ -29,7 +29,7 @@
 #include "transposition.h"
 
 
-TranspositionTable TT = { .requestedMB = DEFAULTHASH };
+TranspositionTable TT = { .requestedMB = 1 };
 
 
 // Probe the transposition table
@@ -83,12 +83,12 @@ static void *ThreadClearTT(void *voidThread) {
     int count = thread->count;
 
     // Logic for dividing the work taken from CFish
-    uint64_t twoMB  = 2 * 1024 * 1024;
+    uint64_t oneMB  = 1 * 1024 * 1024;
     uint64_t size   = TT.count * sizeof(TTEntry);
     uint64_t slice  = (size + count - 1) / count;
-    uint64_t blocks = (slice + twoMB - 1) / twoMB;
-    uint64_t begin  = MIN(size, index * blocks * twoMB);
-    uint64_t end    = MIN(size, begin + blocks * twoMB);
+    uint64_t blocks = (slice + oneMB - 1) / oneMB;
+    uint64_t begin  = MIN(size, index * blocks * oneMB);
+    uint64_t end    = MIN(size, begin + blocks * oneMB);
 
     memset(TT.table + begin / sizeof(TTEntry), 0, end - begin);
 
@@ -113,11 +113,11 @@ void InitTT() {
     if (TT.mem)
         free(TT.mem);
 
-    uint64_t size = TT.requestedMB * 1024 * 1024;
+    uint64_t size = 1 * 1024 * 1024;
 
 #if defined(__linux__)
-    // Align on 2MB boundaries and request Huge Pages
-    TT.mem = aligned_alloc(2 * 1024 * 1024, size);
+    // Align on 1MB boundaries and request Huge Pages
+    TT.mem = aligned_alloc(1 * 1024 * 1024, size);
     TT.table = (TTEntry *)TT.mem;
     madvise(TT.table, size, MADV_HUGEPAGE);
 #else
@@ -132,7 +132,7 @@ void InitTT() {
         exit(EXIT_FAILURE);
     }
 
-    TT.currentMB = TT.requestedMB;
+    TT.currentMB = 1;
     TT.count = size / sizeof(TTEntry);
 
     // Zero out the memory
