@@ -20,7 +20,7 @@
 #include "hash.h"
 
 Hash::Hash(uint64_t MB) {
-    init(MB);
+    init(1);
 }
 
 Hash::~Hash() {
@@ -78,12 +78,13 @@ uint64_t Hash::getSize() const {
 
 void Hash::setSize(uint64_t MB) {
     free(table);
-    init(MB);
+    init(1);
 }
 
 void Hash::init(uint64_t MB) {
+    uint64_t newMB = 1;
     // Convert to bytes
-    uint64_t bytes = MB << 20;
+    uint64_t bytes = newMB << 20;
     // Calculate how many array slots we can use
     uint64_t maxSize = bytes / sizeof(HashNode);
 
