@@ -22,13 +22,13 @@
 #include "types.h"
 
 
-// 2MB hash is a reasonable expectation.
-#define MINHASH 2
+// 1MB hash is a reasonable expectation.
+#define MINHASH 1
 // 65536MB = 2^32 * 16B / (1024 * 1024)
 // is the limit current indexing is able
 // to use given the 16B size of entries
 #define MAXHASH 65536
-#define DEFAULTHASH 32
+#define DEFAULTHASH 1
 
 #define ValidBound(bound) (bound >= BOUND_UPPER && bound <= BOUND_EXACT)
 #define ValidScore(score) (score >= -MATE && score <= MATE)
