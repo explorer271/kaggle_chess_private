@@ -32,7 +32,6 @@
 #include "pawns.h"
 #include "position.h"
 #include "search.h"
-#include "thread_win32_osx.h"
 
 
 /// Thread class keeps together all the thread-related stuff. We use
