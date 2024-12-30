@@ -587,7 +587,7 @@ static void parse_setoption(char string[]) {
 
       ASSERT(!Searching);
 
-      if (option_get_int("Hash") >= 4) {
+      if (option_get_int("Hash") >= 1) {
          trans_free(Trans);
          trans_alloc(Trans);
       }
