@@ -113,7 +113,7 @@ static void init() {
 
       Init = true;
 
-      NumberThreads=option_get_int("Number of Threads");
+      NumberThreads=1;
       if(NumberThreads>MaxThreads) NumberThreads=MaxThreads;
 		
       book_parameter();
@@ -601,7 +601,7 @@ static void parse_setoption(char string[]) {
        exit_threads();
        pawn_free();
        material_free();
-       NumberThreads=option_get_int("Number of Threads");
+       NumberThreads=1;
        if(NumberThreads>MaxThreads) NumberThreads=MaxThreads;
        pawn_alloc();
        material_alloc();
