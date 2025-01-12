@@ -87,7 +87,6 @@ void newSearchThreadPool(Thread *threads, Board *board, Limits *limits, SearchIn
 
         threads[i].height    = 0;
         threads[i].nodes     = 0ull;
-        threads[i].tbhits    = 0ull;
 
         memcpy(&threads[i].board, board, sizeof(Board));
         threads[i].contempt = board->turn == WHITE ? contempt : -contempt;
@@ -105,17 +104,4 @@ uint64_t nodesSearchedThreadPool(Thread *threads) {
         nodes += threads[i].nodes;
 
     return nodes;
-}
-
-uint64_t tbhitsThreadPool(Thread *threads) {
-
-    // Sum up the tbhit counters across each Thread. Threads have
-    // their own tbhit counters to avoid true sharing the cache
-
-    uint64_t tbhits = 0ull;
-
-    for (int i = 0; i < threads->nthreads; i++)
-        tbhits += threads[i].tbhits;
-
-    return tbhits;
 }
