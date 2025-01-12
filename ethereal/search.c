@@ -30,7 +30,6 @@
 #include "bitboards.h"
 #include "board.h"
 #include "evaluate.h"
-#include "pyrrhic/tbprobe.h"
 #include "history.h"
 #include "move.h"
 #include "movegen.h"
@@ -200,7 +199,6 @@ int search(Thread *thread, PVariation *pv, int alpha, int beta, int depth) {
     const int RootNode = (thread->height == 0);
     Board *const board = &thread->board;
 
-    unsigned tbresult;
     int hist = 0, cmhist = 0, fmhist = 0;
     int movesSeen = 0, quietsPlayed = 0, capturesPlayed = 0, played = 0;
     int ttHit, ttValue = 0, ttEval = VALUE_NONE, ttDepth = 0, ttBound = 0;
@@ -269,34 +267,6 @@ int search(Thread *thread, PVariation *pv, int alpha, int beta, int depth) {
                 || (ttBound == BOUND_LOWER && ttValue >= beta)
                 || (ttBound == BOUND_UPPER && ttValue <= alpha))
                 return ttValue;
-        }
-    }
-
-    // Step 5. Probe the Syzygy Tablebases. tablebasesProbeWDL() handles all of
-    // the conditions about the board, the existance of tables, the probe depth,
-    // as well as to not probe at the Root. The return is defined by the Pyrrhic API
-    if ((tbresult = tablebasesProbeWDL(board, depth, thread->height)) != TB_RESULT_FAILED) {
-
-        thread->tbhits++; // Increment tbhits counter for this thread
-
-        // Convert the WDL value to a score. We consider blessed losses
-        // and cursed wins to be a draw, and thus set value to zero.
-        value = tbresult == TB_LOSS ? -TBWIN + thread->height
-              : tbresult == TB_WIN  ?  TBWIN - thread->height : 0;
-
-        // Identify the bound based on WDL scores. For wins and losses the
-        // bound is not exact because we are dependent on the height, but
-        // for draws (and blessed / cursed) we know the tbresult to be exact
-        ttBound = tbresult == TB_LOSS ? BOUND_UPPER
-                : tbresult == TB_WIN  ? BOUND_LOWER : BOUND_EXACT;
-
-        // Check to see if the WDL value would cause a cutoff
-        if (    ttBound == BOUND_EXACT
-            || (ttBound == BOUND_LOWER && value >= beta)
-            || (ttBound == BOUND_UPPER && value <= alpha)) {
-
-            storeTTEntry(board->hash, NONE_MOVE, valueToTT(value, thread->height), VALUE_NONE, depth, ttBound);
-            return value;
         }
     }
 
