@@ -1,3 +1,4 @@
+
 /*
   Ethereal is a UCI chess playing engine authored by Andrew Grant.
   <https://github.com/AndyGrant/Ethereal>     <andrew@grantnet.us>
@@ -104,8 +105,6 @@ int main(int argc, char **argv) {
             printf("option name ContemptDrawPenalty type spin default 0 min -300 max 300\n");
             printf("option name ContemptComplexity type spin default 0 min -100 max 100\n");
             printf("option name MoveOverhead type spin default 100 min 0 max 10000\n");
-            printf("option name SyzygyPath type string default <empty>\n");
-            printf("option name SyzygyProbeDepth type spin default 0 min 0 max 127\n");
             printf("option name Ponder type check default false\n");
             printf("option name AnalysisMode type check default false\n");
             printf("option name UCI_Chess960 type check default false\n");
@@ -266,8 +265,6 @@ void uciSetOption(char *str, Thread **threads, int *multiPV, int *chess960) {
     //  ContemptDrawPenalty : Evaluation bonus in internal units to avoid forced draws
     //  ContemptComplexity  : Evaluation bonus for keeping a position with more non-pawn material
     //  MoveOverhead        : Overhead on time allocation to avoid time losses
-    //  SyzygyPath          : Path to Syzygy Tablebases
-    //  SyzygyProbeDepth    : Minimal Depth to probe the highest cardinality Tablebase
     //  UCI_Chess960        : Set when playing FRC, but not required in order to work
 
     if (strStartsWith(str, "setoption name Hash value ")) {
