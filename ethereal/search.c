@@ -35,7 +35,6 @@
 #include "movegen.h"
 #include "movepicker.h"
 #include "search.h"
-#include "syzygy.h"
 #include "thread.h"
 #include "time.h"
 #include "transposition.h"
@@ -68,10 +67,6 @@ void getBestMove(Thread *threads, Board *board, Limits *limits, uint16_t *best, 
     SearchInfo info = {0};
     pthread_t pthreads[threads->nthreads];
 
-    // Allow Syzygy to refine the move list for optimal results
-    if (!limits->limitedByMoves && limits->multiPV == 1)
-        if (tablebasesProbeDTZ(board, limits, best, ponder))
-            return;
 
     // Minor house keeping for starting a search
     updateTT(); // Table has an age component
