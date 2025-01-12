@@ -27,7 +27,6 @@
 #include "board.h"
 #include "cmdline.h"
 #include "evaluate.h"
-#include "pyrrhic/tbprobe.h"
 #include "history.h"
 #include "masks.h"
 #include "move.h"
@@ -45,7 +44,6 @@
 extern int ContemptDrawPenalty;   // Defined by thread.c
 extern int ContemptComplexity;    // Defined by thread.c
 extern int MoveOverhead;          // Defined by time.c
-extern unsigned TB_PROBE_DEPTH;   // Defined by syzygy.c
 extern volatile int ABORT_SIGNAL; // Defined by search.c
 extern volatile int IS_PONDERING; // Defined by search.c
 extern volatile int ANALYSISMODE; // Defined by search.c
@@ -303,16 +301,6 @@ void uciSetOption(char *str, Thread **threads, int *multiPV, int *chess960) {
         printf("info string set MoveOverhead to %d\n", MoveOverhead);
     }
 
-    if (strStartsWith(str, "setoption name SyzygyPath value ")) {
-        char *ptr = str + strlen("setoption name SyzygyPath value ");
-        tb_init(ptr); printf("info string set SyzygyPath to %s\n", ptr);
-    }
-
-    if (strStartsWith(str, "setoption name SyzygyProbeDepth value ")) {
-        TB_PROBE_DEPTH = atoi(str + strlen("setoption name SyzygyProbeDepth value "));
-        printf("info string set SyzygyProbeDepth to %u\n", TB_PROBE_DEPTH);
-    }
-
     if (strStartsWith(str, "setoption name AnalysisMode value ")) {
         if (strStartsWith(str, "setoption name AnalysisMode value true"))
             printf("info string set AnalysisMode to true\n"), ANALYSISMODE = 1;
@@ -394,7 +382,6 @@ void uciReport(Thread *threads, int alpha, int beta, int value) {
     int elapsed     = elapsedTime(threads->info);
     int bounded     = MAX(alpha, MIN(value, beta));
     uint64_t nodes  = nodesSearchedThreadPool(threads);
-    uint64_t tbhits = tbhitsThreadPool(threads);
     int nps         = (int)(1000 * (nodes / (1 + elapsed)));
 
     // If the score is MATE or MATED in X, convert to X
@@ -409,8 +396,8 @@ void uciReport(Thread *threads, int alpha, int beta, int value) {
                 : bounded <= alpha ? " upperbound " : " ";
 
     printf("info depth %d seldepth %d multipv %d score %s %d%stime %d "
-           "nodes %"PRIu64" nps %d tbhits %"PRIu64" hashfull %d pv ",
-           depth, seldepth, multiPV, type, score, bound, elapsed, nodes, nps, tbhits, hashfull);
+           "nodes %"PRIu64" nps %d hashfull %d pv ",
+           depth, seldepth, multiPV, type, score, bound, elapsed, nodes, nps, hashfull);
 
     // Iterate over the PV and print each move
     for (int i = 0; i < threads->pv.length; i++) {
