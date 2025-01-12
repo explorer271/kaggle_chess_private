@@ -47,7 +47,7 @@ struct Thread {
 
     int contempt;
     int depth, seldepth, height;
-    uint64_t nodes, tbhits;
+    uint64_t nodes;
 
     int *evalStack, _evalStack[STACK_SIZE];
     uint16_t *moveStack, _moveStack[STACK_SIZE];
@@ -75,4 +75,3 @@ Thread* createThreadPool(int nthreads);
 void resetThreadPool(Thread *threads);
 void newSearchThreadPool(Thread *threads, Board *board, Limits *limits, SearchInfo *info);
 uint64_t nodesSearchedThreadPool(Thread *threads);
-uint64_t tbhitsThreadPool(Thread *threads);
