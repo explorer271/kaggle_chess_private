@@ -23,11 +23,8 @@
 #include "evalcache.h"
 #include "types.h"
 
-#ifdef TUNE
-    #define TRACE (1)
-#else
-    #define TRACE (0)
-#endif
+#define TRACE (0)
+
 
 enum {
     SCALE_DRAW             =   0,
