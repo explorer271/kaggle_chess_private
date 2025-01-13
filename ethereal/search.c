@@ -40,7 +40,6 @@
 #include "transposition.h"
 #include "types.h"
 #include "uci.h"
-#include "windows.h"
 
 int LMRTable[64][64];
 int LateMovePruningCounts[2][9];
