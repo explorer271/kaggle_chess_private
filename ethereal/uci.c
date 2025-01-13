@@ -73,8 +73,6 @@ int main(int argc, char **argv) {
     threads = createThreadPool(1);
     boardFromFEN(&board, StartPosition, chess960);
 
-    // Handle any command line requests
-    handleCommandLine(argc, argv);
 
     /*
     |------------|-----------------------------------------------------------------------|
