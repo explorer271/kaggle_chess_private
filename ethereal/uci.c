@@ -26,7 +26,6 @@
 
 #include "attacks.h"
 #include "board.h"
-#include "cmdline.h"
 #include "evaluate.h"
 #include "history.h"
 #include "masks.h"
