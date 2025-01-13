@@ -18,11 +18,7 @@
 
 #pragma once
 
-#if defined(_WIN32) || defined(_WIN64)
-    #include <windows.h>
-#else
-    #include <sys/time.h>
-#endif
+#include <sys/time.h>
 
 #include "types.h"
 
