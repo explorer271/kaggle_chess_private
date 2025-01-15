@@ -9,6 +9,9 @@ struct ScoredMove
 {
     Move move;
     int score;
+
+    // Constructor to initialize 'move' and 'score'
+    ScoredMove(Move m, int s) : move(m), score(s) {}
 };
 
 bool moveIsQuiet(const Board& board, Move move);
