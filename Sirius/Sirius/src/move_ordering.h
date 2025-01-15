@@ -11,7 +11,7 @@ struct ScoredMove
     int score;
 
     // Constructor to initialize 'move' and 'score'
-    ScoredMove(Move m, int s) : move(m), score(s) {}
+    // ScoredMove(Move m, int s) : move(m), score(s) {}
 
     // Default constructor
     ScoredMove() : move(Move()), score(0) {}
