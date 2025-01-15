@@ -12,6 +12,9 @@ struct ScoredMove
 
     // Constructor to initialize 'move' and 'score'
     ScoredMove(Move m, int s) : move(m), score(s) {}
+
+    // Default constructor
+    ScoredMove() : move(Move()), score(0) {}
 };
 
 bool moveIsQuiet(const Board& board, Move move);
