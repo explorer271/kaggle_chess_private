@@ -98,7 +98,10 @@ void* iterativeDeepening(void *vthread) {
     Limits *const limits   = thread->limits;
     const int mainThread   = thread->index == 0;
 
-
+    // Bind when we expect to deal with NUMA
+    if (thread->nthreads > 8)
+        bindThisThread(thread->index);
+  
     // Perform iterative deepening until exit conditions
     for (thread->depth = 1; thread->depth < MAX_PLY; thread->depth++) {
 
